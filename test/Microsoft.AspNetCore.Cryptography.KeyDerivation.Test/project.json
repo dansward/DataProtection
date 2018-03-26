@@ -1,17 +1,17 @@
 {
   "dependencies": {
     "dotnet-test-xunit": "1.0.0-rc3-000000-01",
-    "Microsoft.AspNetCore.Cryptography.Internal": "1.0.5",
-    "Microsoft.AspNetCore.Cryptography.KeyDerivation": "1.0.5",
+    "Microsoft.AspNetCore.Cryptography.Internal": "1.0.6",
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation": "1.0.6",
     "Microsoft.AspNetCore.DataProtection.Test.Shared": "1.0.0-*",
-    "Microsoft.AspNetCore.Testing": "1.0.1",
+    "Microsoft.AspNetCore.Testing": "1.0.2",
     "xunit": "2.1.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.10",
+          "version": "1.0.11-servicing-005046-00",
           "type": "platform"
         },
         "System.Diagnostics.Process": "4.1.0"
