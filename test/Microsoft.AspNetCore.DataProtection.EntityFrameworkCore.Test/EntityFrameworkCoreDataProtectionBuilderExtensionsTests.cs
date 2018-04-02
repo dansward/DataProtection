@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.Test
@@ -14,14 +9,14 @@ namespace Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.Test
     public class EntityFrameworkCoreDataProtectionBuilderExtensionsTests
     {
         [Fact]
-        public void PersistKeysToRedis_UsesRedisXmlRepository()
+        public void PersistKeysToEntityFrameworkCore_UsesEntityFrameworkXmlRepository()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.PersistKeysToEntityFrameworkCore(() => BuildKeyStore(nameof(PersistKeysToRedis_UsesRedisXmlRepository)));
+            builder.PersistKeysToEntityFrameworkCore(() => BuildKeyStore(nameof(PersistKeysToEntityFrameworkCore_UsesEntityFrameworkXmlRepository)));
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
