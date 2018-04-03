@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,13 @@ namespace EntityFrameworkCore
             using (var services = new ServiceCollection()
                 .AddLogging(o => o.AddConsole().SetMinimumLevel(LogLevel.Debug))
                 .AddDataProtection()
-                .PersistKeysToEntityFrameworkCore(() => BuildKeyStore("DataProtection-Keys"))
+                .PersistKeysToEntityFrameworkCore(options =>
+                {
+                    options.KeyStoreOptionsBuilderAction = builder =>
+                    {
+                        builder.UseInMemoryDatabase(databaseName: "DataProtection_Keys");
+                    };
+                })
                 .Services
                 .BuildServiceProvider())
             {
@@ -25,11 +30,5 @@ namespace EntityFrameworkCore
                 Console.WriteLine(protectedData);
             }
         }
-
-        private static DbContextOptions<KeyStore> BuildDbContextOptions(string databaseName)
-            => new DbContextOptionsBuilder<KeyStore>().UseInMemoryDatabase(databaseName: databaseName).Options;
-
-        private static KeyStore BuildKeyStore(string databaseName)
-            => new KeyStore(BuildDbContextOptions(databaseName));
     }
 }

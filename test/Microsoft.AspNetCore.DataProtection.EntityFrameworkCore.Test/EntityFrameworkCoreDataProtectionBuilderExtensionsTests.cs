@@ -13,21 +13,21 @@ namespace Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.Test
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
-            var builder = serviceCollection.AddDataProtection();
+            var dpBuilder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.PersistKeysToEntityFrameworkCore(() => BuildKeyStore(nameof(PersistKeysToEntityFrameworkCore_UsesEntityFrameworkXmlRepository)));
+            dpBuilder.PersistKeysToEntityFrameworkCore(options =>
+            {
+                options.KeyStoreOptionsBuilderAction = builder =>
+                {
+                    builder.UseInMemoryDatabase(databaseName: nameof(PersistKeysToEntityFrameworkCore_UsesEntityFrameworkXmlRepository));
+                };
+            });
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
-            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsType<EntityFrameworkCoreXmlRepository>(options.Value.XmlRepository);
+            var keyManagementOptions = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsType<EntityFrameworkCoreXmlRepository>(keyManagementOptions.Value.XmlRepository);
         }
-
-        private DbContextOptions<KeyStore> BuildDbContextOptions(string databaseName)
-            => new DbContextOptionsBuilder<KeyStore>().UseInMemoryDatabase(databaseName: databaseName).Options;
-
-        private KeyStore BuildKeyStore(string databaseName)
-            => new KeyStore(BuildDbContextOptions(databaseName));
     }
 }
