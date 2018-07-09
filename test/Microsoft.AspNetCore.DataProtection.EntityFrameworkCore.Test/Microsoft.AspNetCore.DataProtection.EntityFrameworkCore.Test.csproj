@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(MicrosoftEntityFrameworkCoreInMemoryPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(MicrosoftEntityFrameworkCoreInMemoryPackageVersion)" />
+    <ProjectReference Include="..\..\src\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>
